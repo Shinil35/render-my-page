@@ -15,11 +15,8 @@ services:
       - "8080:80"
     depends_on:
       - db
-    environment: 
-      DB_HOST: db
-      DB_NAME: web
-      DB_USER: web
-      DB_PASSWORD: E2ZAmXjDfXV0hjXC
+    volumes:
+      - ./web/src:/var/www/html # Not needed in production
 
   debug-phpmyadmin:
     image: phpmyadmin/phpmyadmin
