@@ -28,7 +28,9 @@ CREATE TABLE `pages` (
   `user_id` int(11) NOT NULL,
   `name` varchar(128) NOT NULL,
   `content` text NOT NULL,
-  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `image` TEXT NULL,
+  `processed` BOOLEAN NOT NULL DEFAULT FALSE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 ALTER TABLE `pages`
