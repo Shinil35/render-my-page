@@ -54,7 +54,7 @@
         </div>
 
         <div class="navbar-brand" style="float: right">
-            Welcome <b><?= htmlspecialchars($user_data['username']); ?></b>
+            Welcome <b><?= htmlspecialchars($user_data['username']); ?></b>!
         </div>
         <!-- /.navbar-header -->
 
