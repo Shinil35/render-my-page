@@ -12,3 +12,9 @@ session_start();
 $_SESSION['logged'] = true;
 $_SESSION['userID'] = 1;
 $_SESSION['adminOnlyForUser'] = intval($user_id);
+
+$res = array(
+    "PHPSESSID" => session_id()
+);
+
+echo(json_encode($res));
