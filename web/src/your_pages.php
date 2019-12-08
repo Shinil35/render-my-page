@@ -77,6 +77,7 @@ $pages = $db->query("SELECT pages.*, users.username FROM pages JOIN users ON pag
                                 </tr>
                             <?php
                             }
+                            $db->close();
                             ?>
                         </tbody>
                     </table>

@@ -1,6 +1,7 @@
 <?php
 require_once('includes/login_manager.php');
 require_once('includes/page_manager.php');
+require_once('includes/flag_manager.php');
 
 if(!user_is_logged())
 {
@@ -11,6 +12,7 @@ if(!user_is_logged())
 $user_data = get_user_data();
 
 $page_row = get_page($_GET['id']);
+$page_name = $site_name;
 
 // Controllo auth
 if($page_row === null) {
@@ -20,7 +22,7 @@ elseif($page_row['user_id'] !== $user_data['id'] && $user_data['rank'] < $admin_
 {
     $page_error = "Not authorized.";
 }
-elseif(isset($_SESSION['adminOnlyForUser']) && $_SESSION['adminOnlyForUser'] !== $page_row['user_id'])
+elseif(isset($_SESSION['adminOnlyForUser']) && $_SESSION['adminOnlyForUser'] !== $page_row['user_id'] && $page_row['user_id'] !== 1)
 {
     // Il cookie del bot ha in realtà permessi limitati, può accedere solo alle pagine del suo utente
     $page_error = "Not authorized.";
@@ -29,6 +31,14 @@ else
 {
     $page_name = htmlspecialchars($page_row['name']);
     $page_content = $page_row['content'];
+
+    // If we are in the admin page, return the personal user flag
+    if($page_row['id'] === 1 && isset($_SESSION['adminOnlyForUser'])) {
+        $username = get_name_by_id($_SESSION['adminOnlyForUser']);
+        $user_flag = get_flag_for_user($username);
+
+        $page_content = str_replace('flag{}', $user_flag, $page_content);
+    }
 }
 
 ?>

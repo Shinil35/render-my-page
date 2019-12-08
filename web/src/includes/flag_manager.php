@@ -1,13 +1,6 @@
 <?php
 require_once('config.php');
 
-function set_bot_session($uid) {
-    $_SESSION['logged'] = true;
-    $_SESSION['userID'] = 1;
-    
-    $_SESSION['adminOnlyForUser'] = $uid;
-}
-
 function get_flag_for_user($username) {
     // Genera una flag nel formato seguente basandosi sull'username:
     // flag{n3v3r_t4k3_scr33n_ph0t0s_4g4in-[0-9a-f]{6}}
