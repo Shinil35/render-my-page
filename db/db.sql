@@ -1,0 +1,4 @@
+CREATE USER 'web'@'%' IDENTIFIED WITH mysql_native_password BY 'E2ZAmXjDfXV0hjXC';
+CREATE DATABASE IF NOT EXISTS `web`;
+GRANT ALL PRIVILEGES ON `web`.* TO 'web'@'%';
+
