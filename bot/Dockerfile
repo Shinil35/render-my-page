@@ -6,4 +6,4 @@ RUN pip3 install selenium requests
 WORKDIR /app
 COPY /src .
 
-ENTRYPOINT ["python3", "run_bot.py"]
+ENTRYPOINT ["python3", "-u", "run_bot.py"]

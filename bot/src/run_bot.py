@@ -12,10 +12,16 @@ base_url = 'http://web:80'
 # Load error image
 error_image = base64.b64encode(open("error_image.png", "rb").read()).decode('utf-8')
 
+
+
 while True:
-    # List pages to process
-    res = requests.get('%s/bot/page_list.php?backdoor=%s' % (base_url, backdoor_pwd))
-    pages = json.loads(res.text)
+    try:
+        # List pages to process
+        res = requests.get('%s/bot/page_list.php?backdoor=%s' % (base_url, backdoor_pwd))
+        pages = json.loads(res.text)
+    except:
+        print("Error while getting page list, server not ready yet?")
+        time.sleep(10)
 
     for page in pages:
         page_id = int(page['id'])
@@ -73,5 +79,4 @@ while True:
 
         print("Upload status: %s" % res.text)
     
-    print()
     time.sleep(1)
