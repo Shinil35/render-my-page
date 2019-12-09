@@ -39,18 +39,20 @@ while True:
         cookies = 'PHPSESSID=%s;' % (session)
 
         image = error_image
+
+        # Browser setup
+        chrome_options = Options()
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--disable-gpu")
+        chrome_options.add_argument("--disable-dev-shm-using")
+        chrome_options.add_argument("--disable-software-rasterizer")
+
+        driver = webdriver.Chrome(options=chrome_options)
+        driver.set_page_load_timeout(5)
+
+        # Safe handling
         try:
-            # Browser setup
-            chrome_options = Options()
-            chrome_options.add_argument("--no-sandbox")
-            chrome_options.add_argument("--headless")
-            chrome_options.add_argument("--disable-gpu")
-            chrome_options.add_argument("--disable-dev-shm-using")
-            chrome_options.add_argument("--disable-software-rasterizer")
-
-            driver = webdriver.Chrome(options=chrome_options)
-            driver.set_page_load_timeout(5)
-
             # Inject cookies
             driver.get(dummy_page)
             driver.add_cookie({'name': 'PHPSESSID', 'value': session})
@@ -58,20 +60,19 @@ while True:
             # Visit page
             driver.get(page_url)
 
+            # Accept alert if present
             try:
-                # Accept alert if present
                 alert = driver.switch_to.alert
                 alert.accept()
             except:
                 pass
 
             image = driver.get_screenshot_as_base64()
-
-            driver.close()
         except Exception as e:
             print("Exception while taking screenshot: ")
             print(e)
-            pass
+        finally:
+            driver.close()
 
         # Upload image or error
         data = {'page_id': page_id, 'image': 'data:image/png;base64,%s' % image}
