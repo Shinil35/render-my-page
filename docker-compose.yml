@@ -17,7 +17,12 @@ services:
       - db
     volumes:
       - ./web/src:/var/www/html # Not needed in production
-
+  bot:
+    build: bot
+    restart: always
+    depends_on: 
+      - web
+      
   debug-phpmyadmin:
     image: phpmyadmin/phpmyadmin
     restart: always

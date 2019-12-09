@@ -1,9 +1,13 @@
 <?php
 
 // Challenge difficulty settings
-$enable_csrf_new_page_creation = true;
-$enable_script_tag_detection = true;
-$enable_document_cookie_detection = true;
+$enable_csrf_new_page_creation = true;      // Enable CSRF token check on page creation form
+$enable_script_tag_detection = true;        // Blocks page creation with `<script>`
+$enable_document_cookie_detection = true;   // Blocks page creation with `document.cookie`
+$enable_redirect_detection = true;          // Blocks page creation with `location.href` or `location.replace`
+$enable_check_b64_strings = true;           // Search also in b64 encoded strings for the latest 2 rules
+
+$base64_regex = '((?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?)';
 
 // Use PHP Sessions only if we have an HTTPS connection
 $session_https_strict = false;

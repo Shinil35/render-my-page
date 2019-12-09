@@ -13,6 +13,8 @@ $user_data = get_user_data();
 $page_name = $site_name;
 
 if(isset($_POST['name']) && isset($_POST['content']) && isset($_POST['csrf_token'])) {
+    $lower_case_content = strtolower($_POST['content']);
+
     if($user_data['id'] === 1) {
         // Disable page creation for admin
         $new_error = "Hey! You are here to get the flag, don't mess it up ;)";
@@ -33,24 +35,73 @@ if(isset($_POST['name']) && isset($_POST['content']) && isset($_POST['csrf_token
     {
         $new_error = "Page name can't be more than 128 characters long.";
     }
-    elseif($enable_script_tag_detection && strpos($_POST['content'], '<script>') !== false)
+    elseif($enable_script_tag_detection && strpos($lower_case_content, '<script>') !== false)
     {
         // Avoid by using onload tag
         $new_error = "Hey, I don't like scripts.";
     }
-    elseif($enable_document_cookie_detection && strpos($_POST['content'], 'document.cookie') !== false)
+    elseif($enable_document_cookie_detection && strpos($lower_case_content, 'document.cookie') !== false)
     {
-        // Avoid by using eval+atob
         $new_error = "Sorry, I don't want to give you my nutella biscuits.";
+    }
+    elseif($enable_redirect_detection && strpos($lower_case_content, 'location') !== false)
+    {
+        $new_error = "Sorry, I don't like redirects.";
+    }
+    elseif($enable_redirect_detection && strpos($lower_case_content, 'http-equiv="refresh"') !== false)
+    {
+        $new_error = "Sorry, I don't like redirects.";
     }
     else
     {
-        $result = insert_page($user_data['id'], $_POST['name'], $_POST['content']);
+        $b64_validate = true;
 
-        if($result) {
-            $new_success = "Page created.";
-        } else {
-            $new_error = "Creation failed, please ask to support";
+        // Base64 test decode check
+        if($enable_check_b64_strings) {
+            preg_match_all($base64_regex, $_POST['content'], $matches);
+            $matches = $matches[0];
+            foreach($matches as $match) {
+                $match = trim($match);
+                if(strlen($match) == 0) {
+                    continue;
+                }
+                
+                $decoded = base64_decode($match);
+
+                if($decoded !== FALSE) {
+                    $decoded = strtolower($decoded);
+
+                    // Controlliamo le keyword non ammesse
+                    if($enable_document_cookie_detection && strpos($decoded, 'document.cookie') !== false)
+                    {
+                        // Avoid by using DOUBLE eval+atob
+                        $new_error = ".. I won't give you my biscuits, even if you try with encoding!";
+                        $b64_validate = false;
+                    }
+                    elseif($enable_redirect_detection && strpos($decoded, 'location') !== false)
+                    {
+                        // Avoid by using DOUBLE eval+atob
+                        $new_error = "I already told you that I don't like redirects!";
+                        $b64_validate = false;
+                    }
+                    elseif($enable_redirect_detection && strpos($decoded, 'http-equiv="refresh"') !== false)
+                    {
+                        // Avoid by using DOUBLE eval+atob
+                        $new_error = "I already told you that I don't like redirects!";
+                        $b64_validate = false;
+                    }
+                }
+            }
+        }
+
+        if($b64_validate) {
+            $result = insert_page($user_data['id'], $_POST['name'], $_POST['content']);
+
+            if($result) {
+                $new_success = "Page created.";
+            } else {
+                $new_error = "Creation failed, please ask to support";
+            }
         }
     }
 }

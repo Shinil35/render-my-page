@@ -29,7 +29,7 @@ CREATE TABLE `pages` (
   `name` varchar(128) NOT NULL,
   `content` text NOT NULL,
   `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `image` TEXT NULL,
+  `image` mediumtext NULL,
   `processed` BOOLEAN NOT NULL DEFAULT FALSE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -52,4 +52,4 @@ INSERT INTO `users` (`username`, `password`, `rank`) VALUES ('admin', '$2y$10$bf
 INSERT INTO `users` (`username`, `password`, `rank`) VALUES ('test', '$2y$10$7sgiRgo/N8tJlfGBiKEkzObJrAXw3vInGhj4nBsw9PYLhPRHF125S', '0');
 
 -- Insert flag page
-INSERT INTO `pages` (`user_id`, `name`, `content`, `created`, `image`, `processed`) VALUES ('1', 'Flag', '<h1><strong>OMG!</strong></h1><h1>You found my biscuits..</h1><p><br></p><p><br></p><h2><strong><em>There you go: </em></strong><strong style="color: rgb(178, 107, 0);"><em>flag{}</em></strong></h2><p><br></p><p><br></p><p><br></p><p><br></p>', CURRENT_TIMESTAMP, NULL, '0');
+INSERT INTO `pages` (`user_id`, `name`, `content`, `created`, `image`, `processed`) VALUES ('1', 'Flag', '<h1><strong>OMG!</strong></h1><h1>You found my biscuits..</h1><p><br></p><img src="/img/biscuits.jpg" style="height: 200px"><p><br></p><h1><strong style="color: rgb(178, 107, 0);"><em>flag{}</em></strong></h1><p><br></p><p><br></p><p><br></p><p><br></p>', CURRENT_TIMESTAMP, NULL, '0');
