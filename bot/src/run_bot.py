@@ -49,7 +49,7 @@ while True:
         chrome_options.add_argument("--disable-software-rasterizer")
 
         driver = webdriver.Chrome(options=chrome_options)
-        driver.set_page_load_timeout(5)
+        driver.set_page_load_timeout(2)
 
         # Safe handling
         try:
