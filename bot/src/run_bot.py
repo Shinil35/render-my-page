@@ -24,6 +24,7 @@ while True:
         continue
 
     # Better synchronization between multiple bot instances
+    # TODO: Must use redis for even better bot sync
     # 1. Random wait
     time.sleep(random.randrange(1, 6))
 
