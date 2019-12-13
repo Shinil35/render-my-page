@@ -50,7 +50,7 @@ def get_next_page():
     while next_page is not None:
         if redis_db.sadd('processed_pages', next_page):
             return next_page
-            
+
         next_page = redis_db.spop('pages_to_process')
 
     return None
@@ -80,7 +80,7 @@ def process_page(page_id, user_id):
     chrome_options.add_argument("--disable-software-rasterizer")
 
     driver = webdriver.Chrome(options=chrome_options)
-    driver.set_page_load_timeout(2)
+    driver.set_page_load_timeout(5)
 
     # Safe handling
     try:
