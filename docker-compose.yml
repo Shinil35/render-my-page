@@ -18,11 +18,15 @@ services:
       - db
     volumes:
       - ./web/src:/var/www/html # Not needed in production
+
+  redis:
+    image: redis
   bot:
     build: bot
     restart: always
     depends_on: 
       - web
+      - redis
       
   debug-phpmyadmin:
     image: phpmyadmin/phpmyadmin
