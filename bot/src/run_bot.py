@@ -50,6 +50,8 @@ def get_next_page():
     while next_page is not None:
         if redis_db.sadd('processed_pages', next_page):
             return next_page
+            
+        next_page = redis_db.spop('pages_to_process')
 
     return None
 

