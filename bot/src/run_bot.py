@@ -111,13 +111,12 @@ def process_page(page_id, user_id):
 
 
 while True:
-    time.sleep(1)
-
     update_page_list_cache()
     
     page_id = get_next_page()
 
     if page_id is None:
+        time.sleep(1)
         continue
 
     user_id = get_page_user(page_id)
