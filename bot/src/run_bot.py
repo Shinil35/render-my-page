@@ -123,6 +123,6 @@ while True:
         print("Page with no user (?)")
         continue
 
-    process_page(page_id, user_id)
+    process_page(int(page_id), int(user_id))
 
     
