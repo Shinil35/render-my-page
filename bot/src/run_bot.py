@@ -60,7 +60,7 @@ def get_next_page():
 def get_page_user(page_id):
     return redis_db.hget('page_users', page_id)
 
-def process_page(page_id, user_id):
+def process_page(page_id, user_id, driver):
     print("Processing page %d from user %d" % (page_id, user_id))
     
     # Get a session for this user
@@ -73,44 +73,37 @@ def process_page(page_id, user_id):
 
     image = error_image
 
-    # Browser setup
-    chrome_options = Options()
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--disable-gpu")
-    chrome_options.add_argument("--disable-dev-shm-using")
-    chrome_options.add_argument("--disable-software-rasterizer")
-
-    driver = webdriver.Chrome(options=chrome_options)
-    driver.set_page_load_timeout(5)
-
     # Safe handling
     try:
         # Inject cookies
         driver.get(dummy_page)
+        driver.delete_all_cookies()
         driver.add_cookie({'name': 'PHPSESSID', 'value': session})
 
         # Visit page
         driver.get(page_url)
 
-        # Accept alert if present
-        try:
-            alert = driver.switch_to.alert
-            alert.accept()
-        except:
-            pass
-
         image = driver.get_screenshot_as_base64()
     except Exception as e:
         print("Exception while taking screenshot: ")
         print(e)
-    finally:
-        driver.close()
 
     # Upload image or error
     data = {'page_id': page_id, 'image': 'data:image/png;base64,%s' % image}
     res = requests.post('%s/bot/upload_image.php?backdoor=%s' % (base_url, backdoor_pwd), data=data)
 
+
+
+# Browser setup
+chrome_options = Options()
+chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("--headless")
+# chrome_options.add_argument("--disable-gpu")
+# chrome_options.add_argument("--disable-dev-shm-using")
+# chrome_options.add_argument("--disable-software-rasterizer")
+
+driver = webdriver.Chrome(options=chrome_options)
+driver.set_page_load_timeout(5)
 
 while True:
     update_page_list_cache()
@@ -126,6 +119,7 @@ while True:
         print("Page with no user (?)")
         continue
 
-    process_page(int(page_id), int(user_id))
+    process_page(int(page_id), int(user_id), driver)
 
+driver.close()
     
