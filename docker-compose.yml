@@ -4,20 +4,23 @@ services:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always
+    ports:
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: vPlBIkOyAQcGdGGZOiEY
     volumes:
       - ./db:/docker-entrypoint-initdb.d
       - db-data:/var/lib/mysql
-  web:
-    build: web
-    restart: always
-    ports:
-      - "8080:80"
-    depends_on:
-      - db
-    volumes:
-      - ./web/src:/var/www/html # Not needed in production
+
+  #web:
+  #  build: web
+  #  restart: always
+  #  ports:
+  #    - "8080:80"
+  #  depends_on:
+  #    - db
+  #  volumes:
+  #    - ./web/src:/var/www/html # Not needed in production
 
   redis:
     image: redis
@@ -25,10 +28,9 @@ services:
     build: bot
     restart: always
     depends_on: 
-      - web
       - redis
       
-  debug-phpmyadmin:
+  pma:
     image: phpmyadmin/phpmyadmin
     restart: always
     ports:

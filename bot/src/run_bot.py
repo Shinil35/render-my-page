@@ -9,7 +9,7 @@ from selenium.webdriver.chrome.options import Options
 
 # ---- START CONFIG ----
 backdoor_pwd = '3074bc8c-0a1f-48ae-aedc-54fe9fdd8a32'
-base_url = 'http://web'
+base_url = 'https://render-my-page.herokuapp.com/'
 
 page_list_cache_time = 10 # Seconds between page_list calls
 # ---- END CONFIG ----

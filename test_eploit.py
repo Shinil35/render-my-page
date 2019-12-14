@@ -1,7 +1,7 @@
 import requests
 import uuid
 
-host = 'http://3.121.237.161/'
+host = 'https://render-my-page.herokuapp.com/'
 
 # Create new user
 s = requests.Session()
