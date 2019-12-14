@@ -1,4 +1,6 @@
 <?php
+// Get real IP even if using cloudflare
+$cloudflare_enabled = false;
 
 // Challenge difficulty settings
 $enable_csrf_new_page_creation = true;      // Enable CSRF token check on page creation form
