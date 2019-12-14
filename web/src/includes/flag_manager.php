@@ -26,7 +26,7 @@ function get_flag_for_user($username) {
     $db = new mysqli($GLOBALS['db_host'], $GLOBALS['db_user'], $GLOBALS['db_pass'], $GLOBALS['db_name']);
     if($reg_stmt = $db->prepare("INSERT INTO flags (username, flag, ip) VALUES (?, ?, ?)"))
     {
-        $reg_stmt->bind_param("ssis", $username, $flag, get_real_user_ip());
+        $reg_stmt->bind_param("sss", $username, $flag, get_real_user_ip());
         $reg_stmt->execute();
     }
     $db->close();
