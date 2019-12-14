@@ -22,8 +22,9 @@ def update_page_list_cache():
     page_list_cache_timestamp = redis_db.get('page_list_time')
 
     if page_list_cache_timestamp is None or int(time.time()) > int(page_list_cache_timestamp) + page_list_cache_time:
-        # Avoid (almost certain) page_list update collision
-        redis_db.set('page_list_time', int(time.time()))
+        # Set page_update lock (fail-safe with expire)
+        if not redis_db.set("page_list_lock", "1", nx=True, ex=10):
+            return
 
         # Get updated page_list
         pages = None
@@ -40,6 +41,7 @@ def update_page_list_cache():
     
         # Set real updated timestamp
         redis_db.set('page_list_time', int(time.time()))
+        redis_db.delete('page_list_lock')
 
         print("Updated page_list cache")
 
