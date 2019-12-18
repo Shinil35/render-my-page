@@ -17,7 +17,7 @@ $session_https_strict = false;
 $site_name = "Render My Page";
 $site_version = "v3.0";
 
-$db_host = "3.121.237.161";
+$db_host = "18.185.53.173";
 $db_user = "web";
 $db_pass = "E2ZAmXjDfXV0hjXC";
 $db_name = "web";
