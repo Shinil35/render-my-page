@@ -28,10 +28,6 @@ $page_name = $site_name;
             <p>
                 We like so much <b>HTML</b> syntax that we want to be able to write documents on it and get beautiful screenshots!
             </p>
-            <p>
-                Take a look of these examples:
-                <!-- TODO: BETTER SERVICE DESCRIPTION -->
-            </p>
         </div>
     </div>
 </div>

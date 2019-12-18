@@ -6,8 +6,7 @@ XSS Challenge for UnigeBoeing CTF 2019
 
 # Possibili hint
 
-## 0. La flag si trova in una pagina dell'admin
-## 1. 
+## 1. La flag si trova in una pagina dell'admin
 
 # Password list
 ## Web
@@ -23,9 +22,3 @@ web   - E2ZAmXjDfXV0hjXC
 
 ## Debug server Basic Auth
 zenhack - 3v2YnbAywfWZab3a    
-
-
-# Two intented solutions
-
-## Steal admin session cookie and visit admin page
-## Redirect bot browser to your pages and then page?id=1
