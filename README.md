@@ -27,5 +27,4 @@ zenhack - 3v2YnbAywfWZab3a
 # Intented solutions
 
 ## Steal admin session cookie and visit admin page
-## Redirect bot browser to your pages and then page?id=1
-## Iframe for page?id=1
+## Iframe (with resize) for page?id=1
