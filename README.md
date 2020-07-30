@@ -26,7 +26,7 @@ web   - E2ZAmXjDfXV0hjXC
 zenhack - 3v2YnbAywfWZab3a    
 
 
-# Intented solutions
+# Intended solutions
 
 ## Steal admin session cookie and visit admin page
 ## Iframe (with resize) for page?id=1
